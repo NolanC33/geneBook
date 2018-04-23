@@ -27,20 +27,20 @@ class MakePretty:
     def check_if_removable(line):
         split_version = line.split(" ")
 
-        if len(split_version) == 3 and line.contains("CRANE GENEALOGY"):
+        if len(split_version) == 3 and "CRANE GENEALOGY" in line:
             return True
 
         return False
 
     def convert(self):
 
-        this_line = self.oldVersion.readline().strip()
+        this_line = self.oldVersion.readline()
 
         while this_line:
-
             fixed_line = self.clean_and_parse_line(this_line)
-            self.newVersion.write(fixed_line)
-            this_line = self.oldVersion.readline().strip()
+            if fixed_line:
+                self.newVersion.write(fixed_line)
+            this_line = self.oldVersion.readline()
 
         self.oldVersion.close()
         self.newVersion.close()
