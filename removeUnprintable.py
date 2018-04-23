@@ -1,5 +1,4 @@
 import string
-import os
 
 
 class MakePretty:
@@ -16,28 +15,35 @@ class MakePretty:
         self.oldVersion.seek(pos)
         return line
 
-    def clean_line(self, line):
-        return ''.join(filter(lambda x: x in self.printable, line))
+    def clean_and_parse_line(self, line):
+        cleaned =  ''.join(filter(lambda x: x in self.printable, line))
+
+        if MakePretty.check_if_removable(cleaned):
+            return ''
+
+        return cleaned
+
+    @staticmethod
+    def check_if_removable(line):
+        split_version = line.split(" ")
+
+        if len(split_version) == 3 and line.contains("CRANE GENEALOGY"):
+            return True
+
+        return False
 
     def convert(self):
+
         this_line = self.oldVersion.readline().strip()
 
         while this_line:
-            fixed_line = self.clean_line(this_line)
-            next_line = self.peek_old_line().strip()
 
-            while next_line:
-                fixed_line += self.clean_line(' ' + next_line)
-                self.oldVersion.readline()
-                next_line = self.peek_old_line().strip()
-
+            fixed_line = self.clean_and_parse_line(this_line)
             self.newVersion.write(fixed_line)
-            this_line = self.oldVersion.readline()
+            this_line = self.oldVersion.readline().strip()
 
         self.oldVersion.close()
         self.newVersion.close()
 
 
-mp = MakePretty()
-
-mp.convert()
+MakePretty().convert()
