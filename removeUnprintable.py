@@ -16,12 +16,74 @@ class MakePretty:
         return line
 
     def clean_and_parse_line(self, line):
+
+        if not line.strip():
+            return line
+
         cleaned = ''.join(filter(lambda x: x in self.printable, line))
 
         if MakePretty.check_if_removable(cleaned):
             return ''
 
-        return MakePretty.escape_bad_chars(cleaned)
+        escaped = MakePretty.escape_bad_chars(cleaned)
+
+        if MakePretty.assess_if_heading(line):
+
+            if MakePretty.assess_if_section(line):
+                return MakePretty.make_section(escaped)
+
+            return MakePretty.make_chapter(escaped)
+
+        return escaped
+
+    @staticmethod
+    def has_numbers(line):
+        return any(char.isdigit() for char in line)
+
+    @staticmethod
+    def make_chapter(line):
+
+        if "GENERATION" not in line:
+            return "\chapter{" + line.strip() + "}"
+
+        return line
+
+    @staticmethod
+    def assess_if_heading(line):
+
+        if not line.strip():
+            return False
+
+        if " " not in line:
+            return False
+
+        if len(line.split()) == 1:
+            return False
+
+        if MakePretty.has_numbers(line):
+            return False
+
+        if line.count(".") > 1:
+            return False
+
+        if not line.isupper():
+            return False
+
+        if "GENEALOGY" in line:
+            return False
+
+        return True
+
+    @staticmethod
+    def assess_if_section(line):
+        return "GENERATION" in line
+
+    @staticmethod
+    def make_section(line):
+
+        split_line = line.split()
+
+        return "\\section{" + split_line[0] + " " + split_line[1] + "}"
 
     @staticmethod
     def escape_bad_chars(line):
@@ -39,7 +101,10 @@ class MakePretty:
     def check_if_removable(line):
         split_version = line.strip().split(" ")
 
-        if len(split_version) == 3 and "CRANE GENEALOGY." in line:
+        if len(split_version) == 3 and "GENEALOGY." in line:
+            return True
+
+        if len(split_version) == 2 and "ADDENDA." in line:
             return True
 
         return False
