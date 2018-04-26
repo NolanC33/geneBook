@@ -1,6 +1,7 @@
 import string
 from src import fp
 
+
 class MakePretty:
     printable = set(string.printable)
 
@@ -13,7 +14,6 @@ class MakePretty:
         self.preamble = open(preamble_path, 'r')
         self.postamble = open(postamble_path, 'r')
 
-
     def create_false_positive_checkers(self):
 
         words = ["GENEALOGY.", "GENERATION.", "ADDENDA."]
@@ -21,7 +21,6 @@ class MakePretty:
 
         for i in range(len(words)):
             self.false_pos_checkers.append(fp.FalsePositive(words[i], lengths[i]))
-
 
     def peek_old_line(self):
         pos = self.oldVersion.tell()
