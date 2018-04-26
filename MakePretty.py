@@ -1,5 +1,5 @@
 import string
-from src import fp
+import fp
 
 
 class MakePretty:
@@ -8,7 +8,7 @@ class MakePretty:
     def __init__(self, old_version_path, new_version_path, preamble_path, postamble_path):
         self.printable.add("£")
         self.oldVersion = open(old_version_path, 'r')
-        self.newVersion = open(new_version_path, 'w+', encodeing='utf8')
+        self.newVersion = open(new_version_path, 'w+', encoding='utf8')
         self.false_pos_checkers = []
         self.create_false_positive_checkers()
         self.preamble = open(preamble_path, 'r')
