@@ -2,8 +2,8 @@ import string
 
 
 class MakePretty:
-    oldVersion = open("./v1.txt", 'r')
-    newVersion = open("./v2.tex", 'w+', encoding='utf-8')
+    oldVersion = open("./volume1.txt", 'r')
+    newVersion = open("./vol1v2.tex", 'w+', encoding='utf-8')
     printable = set(string.printable)
 
     def __init__(self):
@@ -104,14 +104,15 @@ class MakePretty:
         if len(split_version) == 3 and "GENEALOGY." in line:
             return True
 
+        if len(split_version) == 3 and "GENERATION." in line:
+            return True
+
         if len(split_version) == 2 and "ADDENDA." in line:
             return True
 
         return False
 
     def generate(self):
-        self.oldVersion = open("./v1.txt", 'r')
-        self.newVersion = open("./v2.tex", 'w+', encoding='utf-8')
 
         preamble = open("./preamble.txt", "r")
         postamble = open("./postamble.txt", "r")
@@ -137,7 +138,6 @@ class MakePretty:
             if fixed_line:
                 self.newVersion.write(fixed_line)
             this_line = self.oldVersion.readline()
-
 
 
 MakePretty().generate()
