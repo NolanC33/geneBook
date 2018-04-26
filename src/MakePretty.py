@@ -1,21 +1,27 @@
 import string
-
+from src import fp
 
 class MakePretty:
-    oldVersion = open("./volume1.txt", 'r')
-    newVersion = open("./vol1v2.tex", 'w+', encoding='utf-8')
     printable = set(string.printable)
-    preamble = None
-    postable = None
 
-    def __init__(self, old_version, new_version):
+    def __init__(self, old_version_path, new_version_path, preamble_path, postamble_path):
         self.printable.add("£")
-        self.oldVersion = old_version
-        self.newVersion = new_version
+        self.oldVersion = open(old_version_path, 'r')
+        self.newVersion = open(new_version_path, 'w+', encodeing='utf8')
+        self.false_pos_checkers = []
+        self.create_false_positive_checkers()
+        self.preamble = open(preamble_path, 'r')
+        self.postamble = open(postamble_path, 'r')
 
 
     def create_false_positive_checkers(self):
-        badWords = []
+
+        words = ["GENEALOGY.", "GENERATION.", "ADDENDA."]
+        lengths = [3, 3, 2]
+
+        for i in range(len(words)):
+            self.false_pos_checkers.append(fp.FalsePositive(words[i], lengths[i]))
+
 
     def peek_old_line(self):
         pos = self.oldVersion.tell()
@@ -105,18 +111,11 @@ class MakePretty:
 
         return new_line
 
-    @staticmethod
-    def check_if_removable(line):
-        split_version = line.strip().split(" ")
+    def check_if_removable(self, line):
 
-        if len(split_version) == 3 and "GENEALOGY." in line:
-            return True
-
-        if len(split_version) == 3 and "GENERATION." in line:
-            return True
-
-        if len(split_version) == 2 and "ADDENDA." in line:
-            return True
+        for checker in self.false_pos_checkers:
+            if checker.is_false_positive(line):
+                return True
 
         return False
 

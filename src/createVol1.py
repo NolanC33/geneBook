@@ -1,4 +1,4 @@
-from gen import MakePretty
+from src import MakePretty
 
 
 class VolOneCreate(MakePretty):
