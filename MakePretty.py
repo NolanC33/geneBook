@@ -16,8 +16,8 @@ class MakePretty:
 
     def create_false_positive_checkers(self):
 
-        words = ["GENEALOGY.", "GENERATION.", "ADDENDA."]
-        lengths = [3, 3, 2]
+        words = ["GENEALOGY.", "GENERATION.", "ADDENDA.", "ELLERY", "II.", "I."]
+        lengths = [3, 3, 2, 3, 2, 2]
 
         for i in range(len(words)):
             self.false_pos_checkers.append(fp.FalsePositive(words[i], lengths[i]))
@@ -35,7 +35,7 @@ class MakePretty:
 
         cleaned = ''.join(filter(lambda x: x in self.printable, line))
 
-        if MakePretty.check_if_removable(cleaned):
+        if self.check_if_removable(cleaned):
             return ''
 
         escaped = MakePretty.escape_bad_chars(cleaned)
@@ -103,14 +103,32 @@ class MakePretty:
 
         new_line = line
 
-        things_to_escape = ["\\", "&", "%", "$", "#", "_", "^"]
+        new_line = new_line.replace("^", "\'")
+        new_line = new_line.replace("''", "\"")
+
+        things_to_escape = ["\\", "&", "%", "$", "#", "_", "}", "{"]
 
         for rep in things_to_escape:
             new_line = new_line.replace(rep, "\\" + rep)
 
         return new_line
 
+    @staticmethod
+    def is_number(s):
+        try:
+            float(s)
+            return True
+        except ValueError:
+            return False
+
     def check_if_removable(self, line):
+
+        split_line = line.split()
+        firstWord = split_line[0]
+        lastWord = split_line[len(split_line) - 1]
+
+        if MakePretty.is_number(firstWord) or MakePretty.is_number(lastWord):
+            return True
 
         for checker in self.false_pos_checkers:
             if checker.is_false_positive(line):

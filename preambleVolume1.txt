@@ -1,0 +1,11 @@
+\documentclass{book}
+\begin{document}
+\title{GENEALOGY OF THE CRANE FAMILY VOLUME II.}
+\author{ELLEREY BICKNELL CRANE}
+
+\maketitle
+\tableofcontents
+
+\chapter{Stuff; Things}
+
+\section{Preface}
