@@ -1,18 +1,53 @@
 \documentclass{book}
 \begin{document}
-\title{GENEALOGY OF THE CRANE FAMILY VOLUME II.}
+\title{GENEALOGY OF THE CRANE FAMILY VOLUME I.}
 \author{ELLEREY BICKNELL CRANE}
 
 \maketitle
 \tableofcontents
 
-\chapter{Stuff; Things}
+\chapter{Introductory Material}
+
+\section{Editor's Notes}
+
+This is a \LaTeX $\:$ version of "Ellerey Crane's GENEOLOGY OF THE CRANE FAMILY, VOLUME 1." first published in 1895. This project can be viewed on github at \texttt{https://github.com/NolanC33/geneBook}
+
+\subsection{Motivation}
+
+I endeavored to create this project for the following reasons: 
+
+\begin{enumerate}
+\item I coudn't find a good place to buy a hard copy version of this book
+\item There is a .txt version of this book found at \texttt{https://archive.org/details/genealogyofcrane02cran}
+\item Creating a "modern" version of the book would be a fun project
+\item I can put the end product online for anyone to see. 
+\end{enumerate}
+
+\subsection{Process}
+
+This whole project is possible because somebody turned the actual book into a \texttt{.pdf} file, and then Optical Character Recognition (OCR) was applied to that \texttt{.pdf} to create a \texttt{.txt} file, which was the "input" to this process. All the errors in translation are the result of incorrect OCR, and there are plenty, which is unfortunate but can't be helped. 
+
+The file \texttt{MakePretty.py} contains most of the details as to how this project was completed, which can be found on the project GitHub. What was ultimately being done here was converting the \texttt{.txt} file (the result of the OCR) to this \texttt{.tex} file, which can be compiled into \texttt{.pdf}.  Here is a rough overview of what was done: 
+
+\begin{enumerate}
+\item Removed all the unprintable characters. 
+\item All the characters that are \LaTeX $\:$ control sequences were escaped.
+\item Chapters and sections were added 
+\item Manual revision to ensure everything is as it should be 
+\end{enumerate}
+
+\subsection{Last Notes}
+
+As stated before, there are a lot of spelling mistakes, unfortunately. The original index was also removed because the OCR did not interpret it in a way that makes sense as an index. 
+
+The pages numbers referred to in the document reference the OLD page numbers, not the page numbers that you see in this document. 
+
+All the images in the book were removed by the OCR. 
+
 
 \section{Preface}
 
-PREFACE. 
-
-fTlHE observance of the Centennial anniversary of the Birth of 
+THE observance of the Centennial anniversary of the Birth of 
 our Nation as a Republic in 1876, drew the attention of every 
 patriotic citizen to the charming picture to be seen by a careful 
 retrospective view* of the past history of the growth and develop- 
